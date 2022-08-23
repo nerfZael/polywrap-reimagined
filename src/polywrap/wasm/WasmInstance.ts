@@ -81,14 +81,11 @@ export class WasmInstance implements IWrapInstance {
     if (result) {
       const resultBuffer = this.state.invoke.result;
       if (!resultBuffer) {
-        console.log("instantiate Response undefined");
         return Err("instantiate Response is undefined");
       }
-      console.log("instantiate ok");
 
       return Ok(msgpackDecode(resultBuffer) as number);
     } else {
-      console.log("instantiate b", this.state.invoke);
       return Err(this.state.invoke.error);
     }
   }
@@ -127,14 +124,11 @@ export class WasmInstance implements IWrapInstance {
     if (result) {
       const resultBuffer = this.state.invoke.result;
       if (!resultBuffer) {
-        console.log("invoke instance Response undefined");
         return Err("invoke instance Response is undefined");
       }
-      console.log("invoke instance ok");
 
       return this.decodeResult<TData>(resultBuffer);
     } else {
-      console.log("invoke instance b", this.state.invoke);
       return Err(this.state.invoke.error);
     }
   }
@@ -169,27 +163,20 @@ export class WasmInstance implements IWrapInstance {
     if (result) {
       const resultBuffer = this.state.invoke.result;
       if (!resultBuffer) {
-        console.log("Response undefine");
         return Err("Response is undefined");
       }
-      console.log("ok");
 
       return Ok(msgpackDecode(resultBuffer) as TData);
     } else {
-      console.log("b", this.state.invoke);
       return Err(this.state.invoke.error);
     }
   }
 
   parseArgsAndExtractReferences(args: any): Uint8Array {
-    console.log("parseArgsAndExtractReferences", args);
     if (!!args && typeof args === "object" && !Array.isArray(args)) {
-      console.log("parseArgsAndExtractReferences match");
       const newObj: any = {};
       let isReference = false;
-      console.log("parseArgsAndExtractReferences", Object.keys(args));
       for (const key of Object.keys(args)) {
-        console.log("parseArgsAndExtractReferences" + key + " " + typeof args[key] );
         if (args[key] === "__classInstancePtr") {
           isReference = true;
           newObj[key] = args[key];
@@ -200,24 +187,36 @@ export class WasmInstance implements IWrapInstance {
         }
       }
 
-      console.log("MEEEETHODS", getMethods(args));
 
       if (isReference || getMethods(args).length) {
-        console.log("INCREMEEEENT");
         newObj.__wrapInstancePtr = 0; 
         const count = ++this.classInstanceCount;
         newObj.__classInstancePtr = count; 
-        console.log("INCREMEEEENT classInstances set", newObj.__classInstancePtr);
         this.state.classInstances.set(count, {
           className: "",
           classInstance: args
         });
-        console.log("INCREMEEEENT classInstances get", this.state.classInstances.get(count));
 
-        console.log("parse newObj", newObj);
       }
+      /*
+      WasmInstnance
+        [
+          provider: 1
+        ]
+        invoke(provider)
+          -> Uniswap
+      
+          {
+            age: 2,
+            bark(): {
+
+            }
+          }
+
+      */
+
+
       const ret = msgpackEncode(newObj);
-      console.log("parse newObj2", ret);
 
       return ret;
     } else {
@@ -233,8 +232,6 @@ export class WasmInstance implements IWrapInstance {
       const newObj: any = {};
       let isReference = false;
 
-      console.log("IsReference", resultObj);
-
       for (const key of Object.keys(resultObj)) {
         if (resultObj[key] === "__classInstancePtr") {
           isReference = true;
@@ -245,7 +242,6 @@ export class WasmInstance implements IWrapInstance {
 
       // if(isReference) {
         newObj.__wrapInstance = this; 
-        console.log("decodeResult newObj", newObj);
       // }
 
       return Ok(newObj as TData);

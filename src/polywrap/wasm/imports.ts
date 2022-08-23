@@ -74,22 +74,15 @@ export const createImports = (config: {
         const method = readString(memory.buffer, methodPtr, methodLen);
         const argsBuf = readBytes(memory.buffer, argsPtr, argsLen);
 
-        console.log("SUB INVOKING INSTANCE wrapInstancePtr", wrapInstancePtr);
         const wrapInstance = state.wrapInstances.get(wrapInstancePtr);
-        console.log("SUB INVOKING INSTANCE wrapInstance", wrapInstance);
 
         // if (!wrapInstance) {
         //   state.invokeInstance.error = "Wrap instance not found";
 
         //   return false;
         // }
-        console.log("SUB INVOKING INSTANCE classInstancePtr", classInstancePtr);
 
         const classInstance = state.classInstances.get(classInstancePtr);
-        console.log("SUB INVOKING INSTANCE classInstance", classInstance);
-        console.log("SUB INVOKING INSTANCE classInstance", state.classInstances);
-        console.log("SUB INVOKING INSTANCE classInstance", typeof classInstancePtr);
-        console.log("SUB INVOKING INSTANCE classInstance",state.classInstances.get(1));
         
         if (!classInstance) {
           state.invokeInstance.error = "Class instance not found";
@@ -100,20 +93,14 @@ export const createImports = (config: {
         if (!state.wasmInstance) {
           throw "This should not happen";
         }
-        console.log("SUB INVOKING INSTANCE wasmInstance", state.wasmInstance);
-        console.log("SUB INVOKING INSTANCE argsBuf", argsBuf);
 
         const args = argsLen
           ? state.wasmInstance.decodeResult(new Uint8Array(argsBuf))
           : undefined;
-        console.log("SUB INVOKING INSTANCE args", args);
-
-        console.log("SUB INVOKING INSTANCE classInstance.classInstance[method]", classInstance.classInstance[method]);
 
         const result = wrapInstance
           ? await wrapInstance.invokeInstance(classInstance.className, classInstancePtr, method, args)
           : Ok(classInstance.classInstance[method](args));
-          console.log("SUB INVOKING INSTANCE result", result);
 
         if (!result.ok) {
           state.invokeInstance.error = "Sub invoke instance failed";
@@ -122,7 +109,6 @@ export const createImports = (config: {
         }
 
         const data = state.wasmInstance.parseArgsAndExtractReferences(result.value);
-        console.log("SUB INVOKING INSTANCE data", data);
 
         state.invokeInstance.result = data;
       

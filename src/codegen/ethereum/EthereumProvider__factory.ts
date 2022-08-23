@@ -4,7 +4,6 @@ import { IWrapPackage } from "../../polywrap/wrap/IWrapPackage";
 import { IEthereumProvider, IEthereumProviderArgs, EthereumProvider } from "./EthereumProvider";
 
 export class EthereumProvider__factory {
-  private static __uri: string = "wrap://ethereum.eth";
   private static __className: string = "EthereumProvider";
 
   static async fromUri(uri: string, loader: IPackageLoader, arg: IEthereumProviderArgs): Promise<IEthereumProvider> {
