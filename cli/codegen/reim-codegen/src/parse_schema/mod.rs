@@ -24,11 +24,9 @@ pub fn parse_schema(source: String) -> WrapAbi {
       walk(&mut type_def_node.walk(), "Name", &mut |name_node| {
           match name_node.utf8_text(source.as_bytes()) {
               Ok(name) => {
-                  let mut isObj = false;
                   let mut schema_type: Option<SchemaType> = None;
 
                   walk(&mut type_def_node.walk(), "ObjectTypeDefinition", &mut |obj_def_node| {
-                      isObj = true;
                       let mut fields: Vec<FieldInfo> = vec![];
                       
                       walk(&mut obj_def_node.walk(), "FieldDefinition", &mut |field_def_node| {
