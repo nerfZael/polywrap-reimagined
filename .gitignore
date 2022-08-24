@@ -4,6 +4,9 @@ build
 dist
 coverage
 
+debug
+out
+
 #Polywrap
 w3
 .w3
