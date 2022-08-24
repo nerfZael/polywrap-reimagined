@@ -20,7 +20,8 @@
     "build:wrap": "lerna run build --scope @polywrap/reim-wrap",
     "build:wasm": "lerna run build --scope @polywrap/reim-wasm",
     "build:loader": "lerna run build --scope @polywrap/reim-loader",
-    "build:app": "lerna run build --scope @polywrap/reim-app"
+    "build:app": "lerna run build --scope @polywrap/reim-app",
+    "test": "lerna run test"
   },
   "devDependencies": {
     "@types/prettier": "2.6.0",
