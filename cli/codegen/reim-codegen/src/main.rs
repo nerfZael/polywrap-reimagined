@@ -31,28 +31,6 @@ fn main() -> Result<(), std::io::Error> {
     Ok(())
 }
 
-// fn main() -> Result<(), std::io::Error> {
-
-//     // let abi_json = read_to_string("abi.json")?;
-//     // let abi: Result<TypeInfo, serde_json::Error> = serde_json::from_str(&abi_json);
-//     // match abi {
-//     //     Ok(abi) => {
-//     //         println!("{:?}", abi);
-//     //         for schema_type in abi {
-//     //             let output = match schema_type {
-//     //                 SchemaType::Function(x) => render_function(x),
-//     //                 SchemaType::Class(x) => render_class(x),
-//     //             };
-//     //         }
-//     //         Ok(())
-//     //     },
-//     //     Err(e) => {
-//     //         println!("{:?}", e);
-//     //         Ok(())
-//     //     }
-//     // }
-// }
-
 pub fn render_class(class_type: &ClassType) {
     let template_str = read_to_string("debug/templates/class-wrapped.mustache").unwrap();
 
