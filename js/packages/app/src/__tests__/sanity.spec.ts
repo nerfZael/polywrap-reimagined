@@ -12,7 +12,7 @@ describe("sanity", () => {
   test("sanity", async () => {
     const loader: IPackageLoader = new FileSystemLoader();
     
-    const wrapPackage: IWrapPackage = await loader.load(`${__dirname}/../../../../../ethereum-wrapper/out`);
+    const wrapPackage: IWrapPackage = await loader.load(`${__dirname}/../../../../../wrapper/build`);
     const wrapper: IWrapInstance = await wrapPackage.createWrapper();
 
     const provider: IEthereumProvider = await EthereumProvider__factory.fromWrapper(wrapper, { arg: "0x" });
