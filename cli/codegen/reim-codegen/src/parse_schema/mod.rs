@@ -5,17 +5,7 @@ pub fn parse_schema(source: String) -> WrapAbi {
   let mut parser = tree_sitter::Parser::new();
   parser.set_language(tree_sitter_wrap::language()).unwrap();
 
-  let source = "
-  type Calc {
-      count: u32
-  }
-
-  type Person {
-      firstName: String
-      lastName: String
-  }
-  ";
-  let tree = parser.parse(source, None).unwrap();
+  let tree = parser.parse(&source, None).unwrap();
   
   let mut cursor = tree.walk();
   let mut typeInfo: Vec<SchemaType> = vec![];
