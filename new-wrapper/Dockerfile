@@ -28,7 +28,7 @@ COPY ./src ./src
 COPY ./package.json ./package.json
 
 # Build the module at src
-RUN ./node_modules/.bin/asc src/wrap/entry.ts \
+RUN ./node_modules/.bin/asc src/wrap/exports.ts \
     --path ./node_modules \
     --outFile ./build/wrap.wasm \
     --use abort=src/wrap/entry/wrapAbort \

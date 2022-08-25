@@ -1,8 +1,7 @@
-import { Args_simpleMethod } from "./wrap";
 import { ICalc } from "./wrap/ICalc";
 
-export function simpleMethod(args: Args_simpleMethod): string {
-  return args.arg;
+export function internalFunction(arg: string): string {
+  return arg;
 }
 
 export class EthereumProvider {
@@ -10,8 +9,8 @@ export class EthereumProvider {
   }
 
   // Example of an instance method and instance state
-  instanceMethod(args: Args_simpleMethod): string {
-    this.someArg = this.someArg + " " + args.arg;
+  instanceMethod(arg: string): string {
+    this.someArg = this.someArg + " " + arg;
 
     return this.someArg;
   }
